@@ -30,7 +30,7 @@ get_velocity()
 
     # Consts
     local THOUSAND=1000
-    local MILLION=100000
+    local MILLION=1000000
 
     local vel=$(( new_value - old_value ))
     local velKB=$(( vel / THOUSAND ))
