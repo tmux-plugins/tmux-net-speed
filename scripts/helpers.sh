@@ -89,6 +89,7 @@ sum_speed()
     local interfaces=(
         "eth0"
         "wlan0"
+        "enp3s0"
     )
 
     local line=""
