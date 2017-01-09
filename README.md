@@ -1,10 +1,19 @@
 # tmux-net-speed
 Tmux plugin to monitor upload and download speed of one or all interfaces. 
 
-NOTE: Currently sums "eth0" and "wlan0" interfaces
-
 ## Special Credit
 This plugin is roughly based on the various plugins in [https://github.com/tmux-plugins]("tmux-plugins"). 
+
+## Variables
+
+- `net_wired_adapter`: set to your wired adapter
+- `net_wlan_adapter`: set to your wireless adapter
+
+Example:
+```
+set -g @net_wired_adapter "eth5"
+set -g @net_wlan_adapter "wlp2s0"
+```
 
 ## Formats
 Shows value in either MB/s, KB/s, or B/s.

@@ -1,10 +1,23 @@
 #!/bin/bash -
 
 ##
-# Varialbes
+# Variables
 ##
 DOWNLOAD_FILE="/tmp/tmux_net_speed.download"
 UPLOAD_FILE="/tmp/tmux_net_speed.upload"
+
+network_interfaces=()
+
+wired_interface=""
+wlan_interface=""
+
+default_wired_network_adapter="eth0"
+default_wlan_network_adapter="wlan0"
+
+get_network_adapter_settings() {
+	wired_interface=$(get_tmux_option "@net_wired_adapter" "$(default_wired_network_adapter)")
+	wlan_interface=$(get_tmux_option "@net_wlan_adapter" "$(default_wlan_network_adapter)")
+}
 
 get_tmux_option() {
 	local option="$1"
@@ -85,10 +98,9 @@ sum_speed()
 {
     local column=$1
 
-    # TODO Make this a parameter option. Set through tmux config
     local interfaces=(
-        "eth0"
-        "wlan0"
+        $wired_interface
+        $wlan_interface
     )
 
     local line=""
