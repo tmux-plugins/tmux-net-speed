@@ -96,6 +96,7 @@ write_file()
 
 sum_speed()
 {
+    get_network_adapter_settings
     local column=$1
 
     local interfaces=(
