@@ -1,4 +1,4 @@
-#!/bin/bash -
+#!/usr/bin/env bash
 ###############################################################################
 # Author: Travis Goldie
 # Purpose: Util funcs for unit tests
