@@ -116,7 +116,12 @@ test_get_interfaces()
 {
     setup_get_interfaces
     result=$(get_interfaces)
-    assertEqual "$result" "eth0 lo wlan0" "should output space-delimited list of interfaces" -v
+    if [[ -n is_osx ]]
+    then
+        assertEqual "$result" "en0 en1 en2 en3 en4 en5 en7" "should output space-delimited list of interfaces" -v 
+    else
+        assertEqual "$result" "eth0 lo wlan0" "should output space-delimited list of interfaces" -v
+    fi
     cleanup_get_interfaces
 }
 
