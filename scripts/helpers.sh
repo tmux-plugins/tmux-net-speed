@@ -5,6 +5,10 @@
 ##
 DOWNLOAD_FILE="/tmp/tmux_net_speed.download"
 UPLOAD_FILE="/tmp/tmux_net_speed.upload"
+DOWNLOAD_CACHE_FILE="/tmp/tmux_net_speed.download.cache"
+UPLOAD_CACHE_FILE="/tmp/tmux_net_speed.upload.cache"
+DOWNLOAD_TIME_FILE="/tmp/tmux_net_speed.download.time"
+UPLOAD_TIME_FILE="/tmp/tmux_net_speed.upload.time"
 
 get_tmux_option() {
     local option=$1
@@ -22,6 +26,19 @@ set_tmux_option() {
     local option=$1
     local value=$2
     tmux set-option -gq "$option" "$value"
+}
+
+is_update_needed()
+{
+    local update_file=$1
+
+    local interval=$(get_tmux_option 'status-interval' 5)
+    local update_time=$(read_file $update_file)
+    local cur_time=$(date +%s)
+    if [ $((update_time + interval)) -gt $cur_time ]; then
+        return 1;
+    fi;
+    return 0;
 }
 
 get_velocity()

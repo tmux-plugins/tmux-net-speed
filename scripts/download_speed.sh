@@ -12,13 +12,19 @@ sum_download_speed()
 main()
 {
     # TODO make configurable
-    #local file=$(get_tmux_option $DOWNLOAD_FILE)
-    local file=$DOWNLOAD_FILE
-    local old_val=$(read_file $file)
-    local new_val=$(sum_download_speed)
+    if ! is_update_needed $DOWNLOAD_TIME_FILE; then
+        local vel=$(read_file $DOWNLOAD_CACHE_FILE)
+    else
+        local file=$DOWNLOAD_FILE
+        local old_val=$(read_file $file)
+        local new_val=$(sum_download_speed)
 
-    write_file $file $new_val
-    local vel=$(get_velocity $new_val $old_val)
+        write_file $file $new_val
+        local vel=$(get_velocity $new_val $old_val)
+
+        write_file $DOWNLOAD_TIME_FILE $(date +%s)
+        write_file $DOWNLOAD_CACHE_FILE "$vel"
+    fi
 
     ## Format output
     local format=$(get_tmux_option @download_speed_format "%s")
